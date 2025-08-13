@@ -1,0 +1,15 @@
+ID:
+    Mã: company
+    Year: year
+
+Outcome/Target (Regression problem):
+    Doanh thu thuần: revenue
+    Value_added: revenue - cogs - sales_cost - admin_cost
+    ROA %: roa
+    ROE %: roe
+
+Outcome (classification problem):
+    EBITDA dummy: 0 for ebitda <=0 and 1 for ebitda > 0
+
+Features:
+    
