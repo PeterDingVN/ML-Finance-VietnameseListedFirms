@@ -12,11 +12,4 @@ import seaborn as sns
 import sklearn
 
 # Scientific computing
-import scipy as sp
-from scipy import stats
-
-
-__all__ = [
-    "pd", "np", "plt", "sns", "sklearn", "sp",
-    "stats"
-]
+import scipy.stats as stats

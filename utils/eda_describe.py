@@ -1,5 +1,4 @@
-from libs import stats, pd
-
+from .libs import *
 
 # EDA function describe + skew, kurtosis
 def eda_describe(df, columns=None):
