@@ -9,3 +9,7 @@
 
 # Ignore PyCharm personal inspection profile settings
 .idea/inspectionProfiles/profile_settings.xml
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
