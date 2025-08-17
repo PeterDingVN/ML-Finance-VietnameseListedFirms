@@ -6,10 +6,13 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-
 # Ignore PyCharm personal inspection profile settings
 .idea/inspectionProfiles/profile_settings.xml
-
 # Ignore Python cache
 __pycache__/
 *.py[cod]
+# PyCharm personal configs
+.idea/workspace.xml
+.idea/inspectionProfiles/profile_settings.xml
+.idea/vcs.xml
+
