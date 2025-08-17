@@ -1,4 +1,5 @@
 from .libs import *
+from sklearn.impute import KNNImputer
 
 # EDA function describe + skew, kurtosis
 def eda_describe(df, columns=None):
@@ -39,3 +40,30 @@ def eda_describe(df, columns=None):
 
 
   return result.T
+
+def select_data(df):
+  data = []
+  try:
+    df = df[df.isna().sum(axis=1) <= 6]
+    for i, grp in df.groupby('company'):
+      year = grp['year'].to_list()
+      year.sort()
+      if len(year) >= 4 and set(np.diff(year)) == {1}:
+        data.append(grp)
+    data_fin = pd.concat(data)
+    return data_fin
+  except ValueError as e:
+    return e
+
+def impute(df):
+  # requirement
+  df_filled = df.copy()
+  num_cols = df.select_dtypes(include='number').columns
+
+  # set up
+  imputer = KNNImputer(n_neighbors=3, weights='distance')
+
+  # Fill
+  df_filled[num_cols] = imputer.fit_transform(df_filled[num_cols])
+
+  return df_filled

@@ -1,12 +1,12 @@
 from . import (
     libs,
-    eda_describe
+    dta_prep
 )
 
 from .libs import *
-from .eda_describe import *
+from .dta_prep import *
 
 __all__ = [
     'pd' , 'np', 'plt', 'sns', 'sklearn', 'stats', # utils.libs
-    'eda_describe' #util.eda_describe
+    'eda_describe', 'select_data', 'impute' #util.dta_prep
 ]
