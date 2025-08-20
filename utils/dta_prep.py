@@ -98,3 +98,25 @@ def impute(df: pd.DataFrame) -> pd.DataFrame:
   df_filled[num_cols] = imputer.fit_transform(df_filled[num_cols])
 
   return df_filled
+
+
+
+def final_data(features2: pd.DataFrame) -> pd.DataFrame:
+  '''
+
+  :param features2: a dataframe
+  :return: a new dataframe with specified columns deleted
+
+  Note: Make sure you have the columns as in the function:
+  cogs, sales_cost, admin_cost, fixed_asset, short_liability, equity_fund, short_receive, cash
+
+  '''
+
+  try:
+    features2['expense'] = features2['cogs'] + features2['sales_cost'] + features2['admin_cost']
+    features2.drop(columns=['cogs', 'sales_cost', 'admin_cost', 'fixed_asset',
+                            'short_liability', 'equity_fund', 'short_receive', 'cash'], inplace=True)
+    return features2
+
+  except KeyError as e:
+    return features2
