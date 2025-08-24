@@ -11,7 +11,7 @@ import seaborn as sns
 # Machine learning
 import sklearn
 
-# Scientific computing
+# Scientific computing and statistics
 import scipy.stats as stats
 import statsmodels
 
