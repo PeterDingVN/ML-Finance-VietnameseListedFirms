@@ -14,3 +14,6 @@ import sklearn
 # Scientific computing
 import scipy.stats as stats
 import statsmodels
+
+# PanelSplit by 4Freye (outside package)
+import panelsplit

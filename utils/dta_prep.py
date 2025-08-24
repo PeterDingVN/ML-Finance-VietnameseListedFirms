@@ -100,23 +100,39 @@ def impute(df: pd.DataFrame) -> pd.DataFrame:
   return df_filled
 
 
-
-def final_data(features2: pd.DataFrame) -> pd.DataFrame:
+def final_data(df: pd.DataFrame, y_col: str) -> pd.DataFrame:
   '''
 
-  :param features2: a dataframe
-  :return: a new dataframe with specified columns deleted
+  :param df: a dataframe
+  :param y_col: name of outcome variable
+  :return: a new dataframe with specified columns deleted and lag created as input for
+  forecasting problem, which ensure meaningfulness and validity of prediction.
 
   Note: Make sure you have the columns as in the function:
-  cogs, sales_cost, admin_cost, fixed_asset, short_liability, equity_fund, short_receive, cash
-
+  cogs, sales_cost, admin_cost, fixed_asset, short_liability, equity_fund, short_receive, cas
   '''
 
+  features2 = df.copy()
+
   try:
+    # Step 1: feature engineer
     features2['expense'] = features2['cogs'] + features2['sales_cost'] + features2['admin_cost']
     features2.drop(columns=['cogs', 'sales_cost', 'admin_cost', 'fixed_asset',
                             'short_liability', 'equity_fund', 'short_receive', 'cash'], inplace=True)
-    return features2
+    # Step 2: create lags
+    shifted = features2.drop('year', axis=1).groupby('company').shift(1).add_suffix('_lag1')
+    shifted[['company', 'year', y_col]] = features2[['company', 'year', y_col]]
+    shifted.dropna(inplace=True)
+    return shifted
 
-  except KeyError as e:
-    return features2
+  except KeyError:
+    # for df_value where there is no cogs, admin_cost and sales_cost
+    features2.drop(columns=['fixed_asset', 'short_liability', 'equity_fund',
+                            'short_receive', 'cash'], inplace=True)
+
+    shifted = features2.drop('year', axis=1).groupby('company').shift(1).add_suffix('_lag1')
+    shifted[['company', 'year', y_col]] = features2[['company', 'year', y_col]]
+    shifted.dropna(inplace=True)
+    return shifted
+
+
