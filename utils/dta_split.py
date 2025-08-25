@@ -2,7 +2,7 @@ from .libs import *
 from .ml_hyperpars import *
 from panelsplit.cross_validation import PanelSplit
 from sklearn.model_selection import GridSearchCV
-
+from typing import Tuple
 
 class InputData:
     def __init__(self, df: pd.DataFrame, id_col: str, time_col: str, target: str, reg: bool):
@@ -80,7 +80,24 @@ class InputData:
         return eval_output
 
 
+def input_test_split(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    '''
 
+    :param: the full input dataframe
+    :return: 2 dataframes divided into input (90%) and hold_out_test set (10%)
+
+    '''
+    # idx
+    all_idx = df['year'].unique().tolist()
+
+    input_idx = all_idx[:int(len(all_idx) * 0.9)]
+    test_idx = all_idx[int(len(all_idx) * 0.9):]
+
+    # data
+    df_input = df[df['year'].isin(input_idx)]
+    df_test = df[df['year'].isin(test_idx)]
+
+    return df_input, df_test
 
 
 
